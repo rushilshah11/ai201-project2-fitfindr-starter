@@ -32,7 +32,7 @@ search_listings will take in a user query and filters the listings json database
 
 <!-- Describe the return value — what fields does a result contain? -->
 
-Returns a dict of all listings that match the user's request and sorts is by relevance. FitFindr will pick the top result and return the listings title - price, platform, condition from the dictionary.
+Returns a list[dict] of all listings that match the user's request, sorted by relevance (highest keyword overlap first). FitFindr will pick the top result (index 0) and return the listing's title, price, platform, and condition.
 
 **What happens if it fails or returns nothing:**
 
