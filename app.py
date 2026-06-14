@@ -57,8 +57,17 @@ def handle_query(user_query: str, wardrobe_choice: str) -> tuple[str, str, str]:
     # 3. Run the agent
     session = run_agent(user_query, wardrobe)
 
-    # 4. Surface errors in the first panel
+    # 4. Surface errors — if a listing was found, still show it; route the error
+    #    to the outfit panel rather than replacing the listing.
     if session["error"]:
+        if session["selected_item"]:
+            item = session["selected_item"]
+            listing_text = (
+                f"{item['title']}\n"
+                f"${item['price']:.2f} · {item['platform']} · {item['condition'].capitalize()} condition\n"
+                f"Size: {item['size']} · Colors: {', '.join(item['colors'])}"
+            )
+            return listing_text, session["error"], ""
         return session["error"], "", ""
 
     # 5. Format the top listing and return all three outputs

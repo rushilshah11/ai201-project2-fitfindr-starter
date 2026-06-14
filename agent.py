@@ -118,6 +118,10 @@ def run_agent(query: str, wardrobe: dict) -> dict:
     session["selected_item"] = session["search_results"][0]
 
     # Step 3: suggest outfit — branch on result
+    if not wardrobe.get("items"):
+        session["error"] = "Please add items to your wardrobe before requesting an outfit suggestion."
+        return session
+
     session["outfit_suggestion"] = suggest_outfit(session["selected_item"], wardrobe)
 
     if not session["outfit_suggestion"] or not session["outfit_suggestion"].strip():
